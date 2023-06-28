@@ -1,0 +1,114 @@
+transcriptome: "data/transcripts/gencode.v35.transcripts.fa.gz"
+
+#Locations of binary files of versions of salmon to test
+ont_salmons:
+    no_em: "/data104/users/julia/ont-tut/salmon-1.10.0/salmon-latest_linux_x86_64/bin/salmon"
+    Basic: "/data104/users/julia/ont-tut/salmon-1.10.0/salmon-latest_linux_x86_64/bin/salmon"
+    Markov-k50-step50 : "/data104/users/julia/testing-salmon-versions/k50ss50/salmon"
+    #Markov-k50-step50-cleaned: "/data104/users/julia/testing-salmon-versions/cleanupk50ss50/salmon"
+    #Markov-k50-step50-old: "/data104/users/julia/testing-salmon-versions/oldk50ss50/salmon"
+    Markov-k50-step25 : "/data104/users/julia/testing-salmon-versions/k50ss25/salmon"
+    Markov-k20-step20: "/data104/users/julia/testing-salmon-versions/k20ss20/salmon"
+    Markov-k20-step10: "/data104/users/julia/testing-salmon-versions/k20ss10/salmon"
+    Markov-k6-step6 : "/data104/users/julia/testing-salmon-versions/k6ss6/salmon"
+    Markov-k6-step3 : "/data104/users/julia/testing-salmon-versions/k6ss3/salmon"
+    
+
+
+plotting_names:
+    No Error Model : "NoEM"
+    "no": "NoEM"  #snakemake turns no (not in quotes) into False
+    Basic: "Basic"
+    Markov-k50-step50 : "k50step50"
+    #Markov-k50-step50-cleaned: "cleaned up"
+    #Markov-k50-step50-old: "old - with junk"
+    Markov-k50-step25 : "k50step25"
+    Markov-k6-step6 : "k6step6"
+    Markov-k6-step3 : "k6step3"
+    Markov-k20-step20: "k20step20"
+    Markov-k20-step10: "k20step10"
+
+transcriptomes:
+    def: "data/transcripts/gencode.v35.transcripts.fa.gz"
+    rnasequin: "data/transcripts/merged_gencode_mixes.fa"
+    sirv: "data/transcripts/merged_SIRV_transcriptome.fa"
+    mouse: "data/transcripts/gencode.vM32.transcripts.fa.gz"
+
+transcriptome_urls:
+    def: "https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_35/gencode.v35.transcripts.fa.gz"
+    mouse: "https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M32/gencode.vM32.transcripts.fa.gz"
+
+
+SIRV_transcripts: "data/SIRV_transcriptome.fa"
+
+rnasequin_transcripts: "data/rnasequin_sequences_2.4.fa"
+
+
+shortread_salmon: "/data104/users/julia/ont-tut/salmon-1.10.0/salmon-latest_linux_x86_64/bin/salmon"
+
+noem_salmon: "/data104/users/julia/ont-tut/salmon-1.10.0/salmon-latest_linux_x86_64/bin/salmon"
+# Minimap2 indexing options
+minimap_index_opts: ""
+
+# Minimap2 mapping options
+minimap2_opts: ""
+
+# Maximum secondary alignments
+maximum_secondary: 100
+
+# Secondary score ratio (-p for minimap2)
+secondary_score_ratio: 1.0
+
+threads: 50
+
+#The ten_ONT_samples and four_illumina_samples come from the ONT tutorial: https://combine-lab.github.io/salmon-tutorials/2021/ont-long-read-quantification/
+
+#Ten ONT samples downloaded from SRA: ERR3218366-ERR3218375
+ten_ONT_samples:
+    "ERR3218366": "data/ont_samples/ERR3218366.fastq"
+    "ERR3218367": "data/ont_samples/ERR3218367.fastq"
+    "ERR3218368": "data/ont_samples/ERR3218368.fastq"
+    "ERR3218369": "data/ont_samples/ERR3218369.fastq"
+    "ERR3218370": "data/ont_samples/ERR3218370.fastq"
+    "ERR3218371": "data/ont_samples/ERR3218371.fastq"
+    "ERR3218372": "data/ont_samples/ERR3218372.fastq"
+    "ERR3218373": "data/ont_samples/ERR3218373.fastq"
+    "ERR3218374": "data/ont_samples/ERR3218374.fastq"
+    "ERR3218375": "data/ont_samples/ERR3218375.fastq"
+
+#Four Illumina samples downloaded from SRA ERR3218280-ERR3218283
+four_illumina_samples:
+    "ERR3218280": "data/ont_samples/ERR3218280.fastq" 
+    "ERR3218281": "data/ont_samples/ERR3218281.fastq" 
+    "ERR3218282": "data/ont_samples/ERR3218282.fastq" 
+    "ERR3218283": "data/ont_samples/ERR3218283.fastq" 
+
+#Samples downloaded from paper "Accurate expression quantification from nanopore direct RNA sequencing with NanoCount"
+#These are samples with "Mix A" and "Mix B" rna sequins, we compare to known concentrations.
+rna_sequin_samples:
+    "ERR4352441": "data/ont_samples/ERR4352441.fastq"
+    "ERR4352442": "data/ont_samples/ERR4352442.fastq"
+    "ERR4352443": "data/ont_samples/ERR4352443.fastq"
+    "ERR4352444": "data/ont_samples/ERR4352444.fastq"
+    "ERR4368409":  "data/ont_samples/ERR4368409.fastq"
+    "ERR4368410":  "data/ont_samples/ERR4368410.fastq"
+
+#These SIRV samples come from the same paper as the RNA sequin samples, they were used as a benchmark for various rna seq quantification software, 
+#including salmon with no error model 
+#SRR6058583 is E2 mix - varying levels of expression
+#SRR6058584 is E0 mix - all same expression
+E0_sra : "SRR6058584"
+E2_sra : "SRR6058583"
+
+sirv_benchmark_E0: "data/samples/SRR6058584"
+sirv_benchmark_E2: "data/samples/SRR6058583"
+
+transcriptome_and_rnasequins: "data/"
+
+#The simulated reads were simulated on a mouse genome using nanosim
+#The expression profile and error model for simulation both come from nanosim's built in error model folder for mouse CDNA
+#Reads were simulated with the intron retention setting on and off, and all other settings were default
+#Each sample contains 1 million simulated reads
+mouse_simulated_samples:
+    "sim_mouse_no_ir" : "data/ont_samples/sim_mouse_no_ir.fastq"
+    "sim_mouse_with_ir": data/ont_samples/sim_mouse_with_ir.fastq
